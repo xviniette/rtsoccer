@@ -1,13 +1,3 @@
-var ping = 0;
-var socket;
-var pID;
-var room;
-var isServer = false;
-var fps = 40;
-var display;
-var spell = 0;
-var mouse = {};
-
 var client;
 
 function joinRoom(id){
@@ -29,14 +19,6 @@ $(function(){
 
 	socket.on("initRoom", function(data){
 		//initialisation de la room
-		/*var players = data.players;
-		data.players = [];
-		room = new Room(data);
-		display.room = room;
-		for(var i in players){
-			players[i].room = room;
-			room.addPlayer(new Player(players[i]));
-		}*/
 		client.initRoom(data);
 	});
 
@@ -52,15 +34,6 @@ $(function(){
 
 	socket.on("snapshot", function(data){
 		//chaque tick update room
-		/*room.players = [];
-		for(var i in data.players){
-			data.players[i].room = room;
-			var p = new Player(data.players[i]);
-			room.players.push(p);
-		}
-		if(data.ball){
-			room.ball = new Ball(data.ball);
-		}*/
 		client.snapshot(data);
 	});
 
@@ -121,10 +94,12 @@ $(function(){
 	});
 
 	setInterval(function(){
+		//Boucle du jeu
 		client.update();
 	}, 1000/client.fps);
 
 	document.body.addEventListener("keypress", function(e) {
+		//Gestion des touches
 		client.keySpell(e.keyCode);
 	});
 });
