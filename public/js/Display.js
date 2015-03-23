@@ -21,6 +21,17 @@ Display.prototype.draw = function(){
 	var room = this.client.room;
 	var players = room.players;
 	var ball = room.ball;
+	var map = room.map;
+
+
+	//affichage map
+	this.ctx.fillStyle = "#46563C";
+	this.ctx.strokeStyle = "white";
+
+	this.ctx.rect(map.startX, map.startY, map.width, map.height);
+	this.ctx.stroke();
+	this.ctx.fill();
+
 
 	//Zone spell
 	if(this.client.spell != 0){
@@ -42,8 +53,12 @@ Display.prototype.draw = function(){
 	}
 
 	//PERSO
-	this.ctx.fillStyle = "red";
 	for(var i in players){
+		if(players[i].team == 1){
+			this.ctx.fillStyle = "red";
+		}else{
+			this.ctx.fillStyle = "blue";
+		}
 		this.ctx.beginPath();
 		this.ctx.arc(players[i].x,players[i].y,players[i].radius,0,2*Math.PI);
 		this.ctx.fill();

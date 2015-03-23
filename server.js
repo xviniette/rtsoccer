@@ -6,6 +6,7 @@ var fs = require('fs');
 
 //Inclde files
 eval(fs.readFileSync('./public/js/Game.js')+'');
+eval(fs.readFileSync('./public/js/Map.js')+'');
 eval(fs.readFileSync('./public/js/Player.js')+'');
 eval(fs.readFileSync('./public/js/Ball.js')+'');
 eval(fs.readFileSync('./public/js/Room.js')+'');

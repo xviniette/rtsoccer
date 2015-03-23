@@ -50,6 +50,11 @@ Ball.prototype.kick = function(dx, dy, speed){
 	this.setDirection(dx, dy, speed);
 }
 
+Ball.prototype.hasGoalCollision = function(){
+
+	return false;
+}
+
 Ball.prototype.update = function(){
 	if(this.player == null){
 		//physic de la ball
@@ -57,6 +62,27 @@ Ball.prototype.update = function(){
 		this.y += this.dy;
 		this.dx *= this.friction;
 		this.dy *= this.friction;
+
+		if(this.x < this.room.map.startX){
+			this.dx *= -1;
+			this.x = this.room.map.startX;
+		}else if(this.x > this.room.map.startX + this.room.map.width){
+			this.dx *= -1;
+			this.x = this.room.map.startX + this.room.map.width;
+		}
+
+		if(this.y < this.room.map.startY){
+			this.dy *= -1;
+			this.y = this.room.map.startY;
+		}else if(this.y > this.room.map.startY + this.room.map.height){
+			this.dy *= -1;
+			this.y = this.room.map.startY + this.room.map.height;
+		}
+
+		var goal = this.hasGoalCollision();
+		if(goal){
+			this.room.goal(goal);
+		}
 
 		//On regarde si un joueur à le ballon
 		for(var i in this.room.players){

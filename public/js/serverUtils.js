@@ -28,10 +28,28 @@ Utils.onTchat = function(data, socket){
 	}else{
 		players = game.getNoneRoomPlayers();
 	}
-	for(var i in players){
-		this.messageTo(players[i].socket, "tchat", p.pseudo+" : "+data);
-		// io.sockets.connected[players[i].socket].emit("tchat", p.pseudo+" : "+data);
+	if(data[0] == "/"){
+		var split = data.split(" ");
+		switch (split[0]) {
+			case "/w":
+			if(split.length >= 3){
+				for(var i in game.players){
+					if(game.players[i].pseudo == split[1]){
+						var msg = data.substr(3 + split[1].length);
+						this.messageTo(socket.id, "tchat", "A "+split[1]+" : "+msg);
+						this.messageTo(game.players[i].socket, "tchat", "De "+p.pseudo+" : "+msg);
+						break;
+					}
+				}
+			}
+			break;
+		}
+	}else{
+		for(var i in players){
+			this.messageTo(players[i].socket, "tchat", p.pseudo+" : "+data);
+		}
 	}
+	
 }
 
 Utils.onMove = function(data, socket){
@@ -59,7 +77,9 @@ Utils.onJoinRoom = function(data, socket){
 	var room = game.getRoom(data);
 	if(p.room == null && room && room.getPlayers().length < room.nbPlayer){
 		p.room = room;
-		(room.getPlayersTeam(1).length < room.nbPlayer/2) ? p.team = 1 : p.team = 2;
+		var nbPlayerTeam1 = room.getPlayersTeam(1).length;
+		(nbPlayerTeam1 >= room.nbPlayer/2) ? p.team = 2 : p.team = 1;
+		console.log(p.team);
 		room.addPlayer(p);
 		Utils.sendInit(p, p.room, socket);
 		//On prévient tous les joueurs de la game du nouveau joueur

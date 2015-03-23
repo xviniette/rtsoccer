@@ -1,10 +1,10 @@
 var Map = function(){
-	this.startX;
-	this.startY;
-	this.width = 600;
-	this.height;
+	this.startX = 20;
+	this.startY = 20;
+	this.width = 760;
+	this.height = 560;
 
-	this.goalHeight = 
+	this.goalHeight = 200;
 
 	this.ballSpawn = {
 		0:{x:this.width/2+this.startX,y:this.height/2+this.startY},

@@ -9,6 +9,7 @@ var Room = function(json){
 	this.startTime = 0;
 	this.score = {"1":0,"2":0};
 
+	this.map = new Map();
 	this.admin;
 
 	this.players = [];
@@ -61,7 +62,7 @@ Room.prototype.getPlayersTeam = function(team){
 	var teamPlayers = [];
 	var players = this.getPlayers();
 	for(var i in players){
-		if(this.team == team){
+		if(this.players[i].team == team){
 			teamPlayers.push(players[i]);
 		}
 	}
@@ -71,15 +72,31 @@ Room.prototype.getPlayersTeam = function(team){
 Room.prototype.goal = function(team){
 	this.score[team]++;
 	if(isServer){
+		this.ball = null;
 		//Si server, on averti tout le monde
 		for(var i in this.players){
 			io.sockets.connected[this.players[i].socket].emit("goal", team);
 		}
+
+		setTimeout(function(){
+			for(var i in this.players){
+				this.players[i].x = this.map.playerSpawn[this.players[i].team].x;
+				this.players[i].y = this.map.playerSpawn[this.players[i].team].y;
+			}
+			var otherTeam = 1;
+			if(team == 1){
+				otherTeam = 2;
+			}
+
+			this.ball = new Ball({x:this.map.ballSpawn.x, y:this.map.ballSpawn.y});
+		}, 3000);
 	}
 }
 
 Room.prototype.addPlayer = function(player){
 	this.players.push(player);
+	player.x = this.map.playerSpawn[player.team].x;
+	player.y = this.map.playerSpawn[player.team].y;
 }
 
 Room.prototype.removePlayer = function(playerID){

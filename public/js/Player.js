@@ -64,6 +64,22 @@ Player.prototype.move = function(){
 
 Player.prototype.update = function(){
 	this.move();
+
+	if(this.x < this.room.map.startX){
+		this.dx *= -1;
+		this.x = this.room.map.startX;
+	}else if(this.x > this.room.map.startX + this.room.map.width){
+		this.dx *= -1;
+		this.x = this.room.map.startX + this.room.map.width;
+	}
+
+	if(this.y < this.room.map.startY){
+		this.dy *= -1;
+		this.y = this.room.map.startY;
+	}else if(this.y > this.room.map.startY + this.room.map.height){
+		this.dy *= -1;
+		this.y = this.room.map.startY + this.room.map.height;
+	}
 }
 
 Player.prototype.hasBall = function(){
