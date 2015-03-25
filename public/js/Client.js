@@ -56,4 +56,42 @@ Client.prototype.keySpell = function(keyCode){
 		(this.spell == 3)? this.spell = 0 : this.spell = 3;
 		break;
 	}
+
+	//On lance direct le sort si sort sans visée
+	var p = this.room.getPlayer(this.pID);
+	if(!p){
+		return;
+	}
+	var s = p.getSpell(this.spell);
+	if(s && s.range == 0){
+		socket.emit("spell", {x:0, y:0,spell:this.spell});
+		this.spell = 0;
+	}
+}
+
+Client.prototype.mouseClick = function(x, y){
+	if(this.spell != 0){
+		socket.emit("spell", {x:x, y:y,spell:this.spell});
+		this.spell = 0;
+	}else{
+		socket.emit("move", {x:x, y:y});
+	}
+}
+
+Client.prototype.mouseMove = function(x, y){
+	this.mouseCoord = {x:x, y:y};
+}
+
+Client.prototype.spellUsed = function(data){
+	if(data.pID == this.pID){
+		var p = this.room.getPlayer(this.pID);
+		for(var i in p.spells){
+			for(var j in p.spells[i]){
+				if(p.spells[i][j].id == data.spellId){
+					p.spells[i][j].lastUse = Date.now();
+					console.log(p.spells[i][j].nom);
+				}
+			}
+		}
+	}
 }

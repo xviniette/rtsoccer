@@ -16,12 +16,12 @@ var Kick = function(){
 Kick.prototype.use = function(player, x, y){
 	if(Date.now() < this.lastUse + this.cd){
 		//probleme cd
-		return;
+		return false;
 	}
 	var distance = Maths.distance(player.x, player.y, x, y);
 	if(distance > this.range){
 		//probleme range
-		return;
+		return false;
 	}
 
 	var pourcentage = distance/this.range;
@@ -31,6 +31,7 @@ Kick.prototype.use = function(player, x, y){
 	var ball = player.room.ball;
 	ball.kick(direction.x, direction.y, parseInt((this.maxSpeedBall - this.minSpellBall) * pourcentage + this.minSpellBall));
 	this.lastUse = Date.now();
+	return true;
 }
 
 //Ultra kick
@@ -51,12 +52,12 @@ var UltraKick = function(){
 UltraKick.prototype.use = function(player, x, y){
 	if(Date.now() < this.lastUse + this.cd){
 		//probleme cd
-		return;
+		return false;
 	}
 	var distance = Maths.distance(player.x, player.y, x, y);
 	if(distance > this.range){
 		//probleme range
-		return;
+		return false;
 	}
 
 	var pourcentage = distance/this.range;
@@ -66,6 +67,7 @@ UltraKick.prototype.use = function(player, x, y){
 	var ball = player.room.ball;
 	ball.kick(direction.x, direction.y, parseInt((this.maxSpeedBall - this.minSpellBall) * pourcentage + this.minSpellBall));
 	this.lastUse = Date.now();
+	return true;
 }
 
 //Flash
@@ -83,18 +85,19 @@ var Flash = function(){
 Flash.prototype.use = function(player, x, y){
 	if(Date.now() < this.lastUse + this.cd){
 		//probleme cd
-		return;
+		return false;
 	}
 	var distance = Maths.distance(player.x, player.y, x, y);
 	if(distance > this.range){
 		//probleme range
-		return;
+		return false;
 	}
 
 	player.x = x;
 	player.y = y;
 	player.direction = {x:x,y:y};
 	this.lastUse = Date.now();
+	return true;
 }
 
 //Charge
@@ -114,12 +117,12 @@ var Charge = function(){
 Charge.prototype.use = function(player, x, y){
 	if(Date.now() < this.lastUse + this.cd){
 		//probleme cd
-		return;
+		return false;
 	}
 	var distance = Maths.distance(player.x, player.y, x, y);
 	if(distance > this.range){
 		//probleme range
-		return;
+		return false;
 	}
 
 	for(var i in player.room.players){
@@ -145,6 +148,7 @@ Charge.prototype.use = function(player, x, y){
 		}
 	}
 	this.lastUse = Date.now();
+	return true;
 }
 
 //Speed
@@ -162,7 +166,7 @@ var Speed = function(){
 Speed.prototype.use = function(player, x, y){
 	if(Date.now() < this.lastUse + this.cd){
 		//probleme cd
-		return;
+		return false;
 	}
 
 	player.boostSpeed = 5;
@@ -172,4 +176,5 @@ Speed.prototype.use = function(player, x, y){
 	}, 20 * 1000);
 	
 	this.lastUse = Date.now();
+	return true;
 }

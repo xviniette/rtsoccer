@@ -42,6 +42,9 @@ $(function(){
 		client.display.refreshRooms(data);
 	});
 
+	socket.on("spell", function(data){
+		client.spellUsed(data);
+	});
 	
 	//ping
 	setInterval(function(){
@@ -60,18 +63,11 @@ $(function(){
 
 	//Event 
 	$("#canvas").on("mousedown", function(e){
-		if(client.spell != 0){
-			//utilisation d'un sort
-			socket.emit("spell", {x:e.offsetX, y:e.offsetY,spell:client.spell});
-			client.spell = 0;
-		}else{
-			//déplacement
-			socket.emit("move", {x:e.offsetX, y:e.offsetY});
-		}
+		client.mouseClick(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top);
 	});
 
 	$("#canvas").on("mousemove", function(e){
-		client.mouseCoord = {x:e.offsetX, y:e.offsetY};
+		client.mouseMove(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top);
 	});
 
 	//creation de room
@@ -100,6 +96,6 @@ $(function(){
 
 	document.body.addEventListener("keypress", function(e) {
 		//Gestion des touches
-		client.keySpell(e.keyCode);
+		client.keySpell(e.charCode);
 	});
 });

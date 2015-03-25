@@ -62,11 +62,17 @@ Utils.onSpell = function(data, socket){
 	var p = game.getPlayerBySocket(socket.id);
 	if(!p){return;}
 	var spell = p.getSpell(data.spell);
+	var isOk = false;
 	if(spell != null){
 		if(data.x && data.y){
-			spell.use(p, data.x, data.y);	
+			isOk = spell.use(p, data.x, data.y);	
 		}else{
-			spell.use(p);
+			isOk = spell.use(p);
+		}
+	}
+	if(isOk){
+		for(var i in p.room.players){
+			this.messageTo(p.room.players[i].socket, "spell", {pID:p.id, spellId:spell.id});
 		}
 	}
 }
