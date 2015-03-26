@@ -3,14 +3,14 @@
 var Kick = function(){
 	this.id = 1;
 	this.nom = "Frappe";
-	this.cd = 0;
+	this.cd = 1000;
 	this.range = 300; //0 = sort qui s'utilise direct ; > 0 zone ou on choisit
 	this.aoe = "direction"; // int = zone en cercle, "direction" = fleche, "target" = cible	
 	this.lastUse = 0;
 	this.description = "Un sort de frappe basique.";
 
-	this.maxSpeedBall = 30;
-	this.minSpellBall = 1;
+	this.maxSpeedBall = 40;
+	this.minSpellBall = 10;
 }
 
 Kick.prototype.use = function(player, x, y){
@@ -39,14 +39,14 @@ Kick.prototype.use = function(player, x, y){
 var UltraKick = function(){
 	this.id = 2;
 	this.nom = "UltraFrappe";
-	this.cd = 10000;
-	this.range = 500; //0 = sort qui s'utilise direct ; > 0 zone ou on choisit
+	this.cd = 20000;
+	this.range = 150; //0 = sort qui s'utilise direct ; > 0 zone ou on choisit
 	this.aoe = "direction"; // int = zone en cercle, "direction" = fleche, "target" = cible	
 	this.lastUse = 0;
 	this.description = "Un sort de frappe puissant.";
 
 	this.maxSpeedBall = 100;
-	this.minSpellBall = 30;
+	this.minSpellBall = 50;
 }
 
 UltraKick.prototype.use = function(player, x, y){
@@ -75,8 +75,8 @@ UltraKick.prototype.use = function(player, x, y){
 var Flash = function(){
 	this.id = 3;
 	this.nom = "Flash";
-	this.cd = 0;
-	this.range = 150; //0 = sort qui s'utilise direct ; > 0 zone ou on choisit
+	this.cd = 30000;
+	this.range = 200; //0 = sort qui s'utilise direct ; > 0 zone ou on choisit
 	this.aoe = "target"; // int = zone en cercle, "direction" = fleche, "target" = cible	
 	this.lastUse = 0;
 	this.description = "Un sort de teleportation.";
@@ -105,8 +105,8 @@ Flash.prototype.use = function(player, x, y){
 var Charge = function(){
 	this.id = 4;
 	this.nom = "Charge";
-	this.cd = 0;
-	this.range = 300; //0 = sort qui s'utilise direct ; > 0 zone ou on choisit
+	this.cd = 5000;
+	this.range = 100; //0 = sort qui s'utilise direct ; > 0 zone ou on choisit
 	this.aoe = 50; // int = zone en cercle, "direction" = fleche, "target" = cible	
 	this.lastUse = 0;
 	this.description = "Permet d'assommer un adversaire, et lui faire perdre la balle.";
@@ -127,7 +127,7 @@ Charge.prototype.use = function(player, x, y){
 
 	for(var i in player.room.players){
 		var p = player.room.players[i];
-		if(Maths.distance(p.x, p.y, x, y) <= this.aoe){
+		if(p.id != player.id && Maths.distance(p.x, p.y, x, y) <= this.aoe){
 			//On stun le mec
 			p.timeStun = Date.now() + this.stun;
 			//Si ball, on lui fait perdre
@@ -156,7 +156,7 @@ Charge.prototype.use = function(player, x, y){
 var Speed = function(){
 	this.id = 5;
 	this.nom = "Vitesse";
-	this.cd = 0;
+	this.cd = 20000;
 	this.range = 0; //0 = sort qui s'utilise direct ; > 0 zone ou on choisit
 	this.aoe = 0; // int = zone en cercle, "direction" = fleche, "target" = cible	
 	this.lastUse = 0;
@@ -169,11 +169,11 @@ Speed.prototype.use = function(player, x, y){
 		return false;
 	}
 
-	player.boostSpeed = 5;
+	player.boostSpeed = player.speed * 0.5;
 
 	setTimeout(function(){
 		player.boostSpeed = 0;
-	}, 20 * 1000);
+	}, 5 * 1000);
 	
 	this.lastUse = Date.now();
 	return true;

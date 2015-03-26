@@ -58,6 +58,9 @@ Client.prototype.keySpell = function(keyCode){
 	}
 
 	//On lance direct le sort si sort sans visée
+	if(!this.room){
+		return;
+	}
 	var p = this.room.getPlayer(this.pID);
 	if(!p){
 		return;
@@ -89,7 +92,6 @@ Client.prototype.spellUsed = function(data){
 			for(var j in p.spells[i]){
 				if(p.spells[i][j].id == data.spellId){
 					p.spells[i][j].lastUse = Date.now();
-					console.log(p.spells[i][j].nom);
 				}
 			}
 		}

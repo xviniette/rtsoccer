@@ -85,7 +85,6 @@ Utils.onJoinRoom = function(data, socket){
 		p.room = room;
 		var nbPlayerTeam1 = room.getPlayersTeam(1).length;
 		(nbPlayerTeam1 >= room.nbPlayer/2) ? p.team = 2 : p.team = 1;
-		console.log(p.team);
 		room.addPlayer(p);
 		Utils.sendInit(p, p.room, socket);
 		//On prévient tous les joueurs de la game du nouveau joueur

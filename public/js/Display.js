@@ -32,10 +32,23 @@ Display.prototype.draw = function(){
 	this.ctx.stroke();
 	this.ctx.fill();
 
+	var p = room.getPlayer(this.client.pID);
+	//liste spells
+	var spells = p.spells.withBall;
+	if(!p.hasBall()){
+		spells = p.spells.withoutBall;
+	}
+	var htmlSpell = "";
+	for(var i in spells){
+		htmlSpell += spells[i].nom+" ";
+		if(spells[i].lastUse + spells[i].cd > Date.now()){
+			htmlSpell += "("+ Math.round(((spells[i].lastUse + spells[i].cd) - Date.now())/100)/10 +") ";
+		}
+	}
+	$("#spells").html(htmlSpell);
 
 	//Zone spell
 	if(this.client.spell != 0){
-		var p = room.getPlayer(this.client.pID);
 		var s = p.getSpell(this.client.spell);
 		if(s != null){
 			this.ctx.fillStyle = "rgba(86, 182, 255, 0.2)";
