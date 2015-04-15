@@ -23,7 +23,7 @@ app.get( '/*' , function( req, res, next ) {
 	res.sendFile( __dirname + '/' + file );
 });
 
-http.listen(8080, function(){});
+http.listen(1321, function(){});
 
 var isServer = true;
 var fps = 40;

@@ -22,15 +22,35 @@ Display.prototype.draw = function(){
 	var players = room.players;
 	var ball = room.ball;
 	var map = room.map;
-
+	var img = this.client.images;
 
 	//affichage map
-	this.ctx.fillStyle = "#46563C";
-	this.ctx.strokeStyle = "white";
 
-	this.ctx.rect(map.startX, map.startY, map.width, map.height);
+	//AFFICHAGE GAZON
+	var gazonLarge = 64;
+	for(var i = 0; i < this.canvas.width/gazonLarge; i++){
+		for(var j = 0; j < this.canvas.height/gazonLarge; j++){
+			this.ctx.drawImage(img.tiles, 0, 0, 64, 64, i*gazonLarge, j*gazonLarge, gazonLarge, gazonLarge);
+		}
+	}
+	//Lignes du terrain
+	this.ctx.strokeStyle = "white";
+	this.ctx.lineWidth = 5;
+	this.ctx.strokeRect(map.startX, map.startY, map.width, map.height);
+	this.ctx.beginPath();
+	this.ctx.moveTo(map.width/2 + map.startX, map.startY);
+	this.ctx.lineTo(map.width/2 + map.startX, map.startY + map.height);
 	this.ctx.stroke();
-	this.ctx.fill();
+
+	this.ctx.beginPath();
+	this.ctx.arc(map.width/2 + map.startX, map.startY + map.height/2, map.height/5, 0, 2*Math.PI);
+	this.ctx.stroke();
+	this.ctx.closePath();
+	//Cages
+	this.ctx.fillStyle = "white";
+	this.ctx.fillRect(0, map.startY + map.height/2 - map.goalHeight/2, map.startX, map.goalHeight);
+	this.ctx.fillStyle = "white";
+	this.ctx.fillRect(map.startX + map.width, map.startY + map.height/2 - map.goalHeight/2, map.startX, map.goalHeight);
 
 	var p = room.getPlayer(this.client.pID);
 	//liste spells
@@ -75,6 +95,12 @@ Display.prototype.draw = function(){
 		this.ctx.beginPath();
 		this.ctx.arc(players[i].x,players[i].y,players[i].radius,0,2*Math.PI);
 		this.ctx.fill();
+		this.ctx.fillStyle = "white";
+		if(players[i].id == client.pID){
+			this.ctx.fillStyle = "yellow";
+		}
+		this.ctx.font = "10px Arial";
+		this.ctx.fillText(players[i].pseudo, players[i].x - players[i].radius, players[i].y - players[i].radius);
 	}
 
 	if(ball){
@@ -97,4 +123,12 @@ Display.prototype.refreshRooms = function(data){
 	}
 	html += "</ul>";
 	$("#rooms").html(html);
+}
+
+Display.prototype.hideRooms = function(){
+	$(".rooms").hide();
+}
+
+Display.prototype.showRooms = function(){
+	$(".rooms").show();
 }

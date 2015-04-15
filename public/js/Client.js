@@ -6,6 +6,8 @@ var Client = function(){
 	this.spell = 0;
 	this.mouseCoord = {};
 
+	this.images;
+
 	this.room;
 }
 
@@ -16,6 +18,7 @@ Client.prototype.initRoom = function(data){
 		data.players[i].room = this.room;
 		this.room.players.push(new Player(data.players[i]));
 	}
+	this.display.hideRooms();
 }
 
 
@@ -35,6 +38,8 @@ Client.prototype.snapshot = function(data){
 		}else{
 			this.room.ball = new Ball(data.ball);
 		}
+	}else{
+		this.room.ball = null;
 	}
 }
 
@@ -95,5 +100,25 @@ Client.prototype.spellUsed = function(data){
 				}
 			}
 		}
+	}
+}
+
+Client.prototype.loadImages = function(sources){
+	var _this = this;
+	this.images = {};
+	var loadedImages = 0;
+	var numImages = 0;
+	for(var src in sources) {
+		numImages++;
+	}
+	for(var src in sources) {
+		this.images[src] = new Image();
+		this.images[src].onload = function() {
+			if(++loadedImages >= numImages) {
+				console.log("ok");
+				//_this.display = new Display({client:this});
+			}
+		};
+		this.images[src].src = sources[src];
 	}
 }

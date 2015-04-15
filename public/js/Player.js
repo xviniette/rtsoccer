@@ -49,7 +49,7 @@ Player.prototype.move = function(){
 		this.direction = null;
 	}
 	if(this.direction){
-		var totspeed = this.speed + this.boostSpeed;
+		var totspeed = this.speed + this.boostSpeed * this.room.delta;
 		var distance = Maths.distance(this.x, this.y, this.direction.x, this.direction.y); 
 		if(distance <= totspeed){
 			this.x = this.direction.x;

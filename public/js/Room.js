@@ -15,6 +15,8 @@ var Room = function(json){
 	this.players = [];
 	this.ball;
 
+	this.delta = 0;
+
 	this.init(json);
 }
 
@@ -22,18 +24,24 @@ Room.prototype.init = function(json){
 	for(var i in json){
 		this[i] = json[i];
 	}
+	this.start();
+}
+
+Room.prototype.start = function(){
+	this.newBall(this.map.ballSpawn[0].x, this.map.ballSpawn[0].x);
 }
 
 Room.prototype.update = function(){
+	this.delta = (Date.now() - this.currentTime)/1000;
 	this.currentTime = Date.now();
+	
 	for(var i in this.players){
 		this.players[i].update();
 	}
 	if(this.ball){
 		this.ball.update();
-	}else{
-		this.ball = new Ball({room:this});
 	}
+
 	if(isServer){
 		this.updateNetwork();
 	}
@@ -78,19 +86,25 @@ Room.prototype.goal = function(team){
 			io.sockets.connected[this.players[i].socket].emit("goal", team);
 		}
 
+		var _this = this;
 		setTimeout(function(){
-			for(var i in this.players){
-				this.players[i].x = this.map.playerSpawn[this.players[i].team].x;
-				this.players[i].y = this.map.playerSpawn[this.players[i].team].y;
+			for(var i in _this.players){
+				_this.players[i].x = _this.map.playerSpawn[_this.players[i].team].x;
+				_this.players[i].y = _this.map.playerSpawn[_this.players[i].team].y;
+				_this.players[i].direction = null;
 			}
 			var otherTeam = 1;
 			if(team == 1){
 				otherTeam = 2;
 			}
 
-			this.ball = new Ball({x:this.map.ballSpawn.x, y:this.map.ballSpawn.y});
+			_this.newBall(_this.map.ballSpawn[team].x, _this.map.ballSpawn[team].y);
 		}, 3000);
 	}
+}
+
+Room.prototype.newBall = function(x, y){
+	this.ball = new Ball({x:x, y:y, room:this});
 }
 
 Room.prototype.addPlayer = function(player){

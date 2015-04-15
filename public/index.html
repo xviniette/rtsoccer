@@ -7,23 +7,7 @@
 </head>
 <body>	
 	<div id="jeu">
-		<div class="rooms">
-			<form id="createRoom">
-				<input type="text" placeholder="Nom de la partie" id="roomName">
-				<input type="number" id="roomNbPlayer" value="4" max="20" min="2" step="2">
-				<input type="number" id="roomTime" value="5" max="20" min="1" step="1">
-				<input type="submit" value="Créer partie">
-			</form>
-			<div id="rooms"></div>
-		</div>
-		<div class="tchat">
-			<ul id="messages"></ul>
-			<form id="tchat">
-				<input type="text" id="tchatBar">
-				<input type="submit" value="Envoyer">
-			</forum>
-		</div>
-		<canvas id="canvas" width="800" height="600"></canvas>
+		<canvas id="canvas" width="800" height="560"></canvas>
 		<div class="informations">
 			<div id="spells">
 			</div>
@@ -33,9 +17,25 @@
 				<div id="score2"></div>
 			</div>
 		</div>
+		<div class="rooms">
+			<form id="createRoom">
+				<input type="text" placeholder="Nom de la partie" id="roomName">
+				<input type="number" id="roomNbPlayer" value="4" max="20" min="2" step="2">
+				<input type="number" id="roomTime" value="5" max="20" min="1" step="1">
+				<input type="submit" value="Créer partie">
+			</form>
+			<div id="rooms"></div>	
+		</div>
+		<div class="tchat">
+			<ul id="messages"></ul>
+			<form id="tchat">
+				<input type="text" id="tchatBar" size="20">
+				<input type="submit" value="Send">
+			</forum>
+		</div>
 	</div>
-	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="public/js/socketio.js"></script>
+	<script src="public/js/jquery.js"></script>
 	<script src="public/js/Player.js"></script>
 	<script src="public/js/Room.js"></script>
 	<script src="public/js/Display.js"></script>

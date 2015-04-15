@@ -5,7 +5,13 @@ function joinRoom(id){
 }
 
 $(function(){
+
+	var imgs = {
+		tiles:"public/img/tiles.png"
+	}
+
 	client = new Client();
+	client.loadImages(imgs);
 	socket = io();
 	//Ok
 	socket.on("login", function(data){
@@ -58,6 +64,7 @@ $(function(){
 	//tchat
 	socket.on("tchat", function(data){
 		$("#messages").append('<li>'+data+'</li>');
+		$("#messages").animate({scrollTop:$("#messages").prop('scrollHeight')}, 30);
 	});
 
 
@@ -85,7 +92,9 @@ $(function(){
 	$("#tchat").submit(function(e){
 		e.preventDefault();
 		var bar = $("#tchatBar");
-		socket.emit("tchat", bar.val());
+		if(bar.val().length > 0){
+			socket.emit("tchat", bar.val());
+		}
 		bar.val("");
 	});
 

@@ -51,7 +51,15 @@ Ball.prototype.kick = function(dx, dy, speed){
 }
 
 Ball.prototype.hasGoalCollision = function(){
-
+	var goalYmin = this.room.map.startY + (this.room.map.height/2 - this.room.map.goalHeight/2);
+	var goalYmax = goalYmin + this.room.map.goalHeight;
+	if(this.y >= goalYmin && this.y <= goalYmax && (this.x <= this.room.map.startX || this.x >= this.room.map.startX + this.room.map.width)){
+		if(this.x <= this.room.map.startX){
+			return 1;
+		}else{
+			return 2;
+		}
+	}
 	return false;
 }
 
@@ -62,6 +70,11 @@ Ball.prototype.update = function(){
 		this.y += this.dy;
 		this.dx *= this.friction;
 		this.dy *= this.friction;
+
+		var goal = this.hasGoalCollision();
+		if(goal){
+			this.room.goal(goal);
+		}
 
 		if(this.x < this.room.map.startX){
 			this.dx *= -1;
@@ -79,10 +92,7 @@ Ball.prototype.update = function(){
 			this.y = this.room.map.startY + this.room.map.height;
 		}
 
-		var goal = this.hasGoalCollision();
-		if(goal){
-			this.room.goal(goal);
-		}
+		
 
 		//On regarde si un joueur à le ballon
 		for(var i in this.room.players){

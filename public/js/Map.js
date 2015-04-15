@@ -2,7 +2,7 @@ var Map = function(){
 	this.startX = 20;
 	this.startY = 20;
 	this.width = 760;
-	this.height = 560;
+	this.height = 520;
 
 	this.goalHeight = 200;
 
