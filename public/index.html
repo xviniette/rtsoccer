@@ -13,11 +13,13 @@
 			</div>
 			<div id="timeleft"></div>
 			<div class="score">
-				<div id="score1"></div>
-				<div id="score2"></div>
+				<div id="score1">0</div>
+				<div id="score2">0</div>
 			</div>
+			<div class="actions"><button id="switch">Changer d'équipe</button><button id="leave">Quitter</div></div>
 		</div>
 		<div class="rooms">
+			<span id="nbPlayers">0</span> joueur(s) en ligne
 			<form id="createRoom">
 				<input type="text" placeholder="Nom de la partie" id="roomName">
 				<input type="number" id="roomNbPlayer" value="4" max="20" min="2" step="2">

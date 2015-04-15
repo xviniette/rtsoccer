@@ -48,10 +48,32 @@ $(function(){
 		client.display.refreshRooms(data);
 	});
 
+	//Ok
+	socket.on("nbPlayers", function(data){
+		$("#nbPlayers").text(data);
+	});
+
+
 	socket.on("spell", function(data){
 		client.spellUsed(data);
 	});
-	
+
+	socket.on("goal", function(data){
+		$("#score"+data.team).text(data.score);
+	});
+
+	socket.on("switchTeam", function(data){
+		if(client.room){
+			for(var i in client.room.players){
+				if(client.room.players[i].id == data.id){
+					console.log("lol");
+					client.room.players[i].team = data.team;
+					break;
+				}
+			}
+		}
+	});
+
 	//ping
 	setInterval(function(){
 		socket.emit("ping", Date.now());
@@ -96,6 +118,15 @@ $(function(){
 			socket.emit("tchat", bar.val());
 		}
 		bar.val("");
+	});
+
+	$("#leave").on("click", function(){
+		socket.emit("leaveRoom", "");
+		client.display.showRooms();
+	});
+
+	$("#switch").on("click", function(){
+		socket.emit("changeTeam", "");
 	});
 
 	setInterval(function(){

@@ -55,9 +55,9 @@ Ball.prototype.hasGoalCollision = function(){
 	var goalYmax = goalYmin + this.room.map.goalHeight;
 	if(this.y >= goalYmin && this.y <= goalYmax && (this.x <= this.room.map.startX || this.x >= this.room.map.startX + this.room.map.width)){
 		if(this.x <= this.room.map.startX){
-			return 1;
-		}else{
 			return 2;
+		}else{
+			return 1;
 		}
 	}
 	return false;

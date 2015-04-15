@@ -60,3 +60,7 @@ Game.prototype.getRefreshRooms = function(){
 	}
 	return rooms;
 }
+
+Game.prototype.getNbPlayers = function(){
+	return Object.keys(this.players).length;
+}

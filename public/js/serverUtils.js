@@ -16,6 +16,7 @@ Utils.onLogin = function(data, socket){
 		socket.emit("playerID", p.id);
 		game.addPlayer(p);
 		socket.emit("refreshRooms", game.getRefreshRooms());
+		io.emit("nbPlayers", game.getNbPlayers());
 	}
 }
 
@@ -143,7 +144,10 @@ Utils.onChangeTeam = function(data, socket){
 		(p.team == 1) ? otherTeam = 2 : otherTeam = 1;
 		var nbPlayerOther = p.room.getPlayersTeam(otherTeam).length;
 		if(nbPlayerOther < p.room.nbPlayer){
-			p.team = 2;
+			p.team = otherTeam;
+		}
+		for(var i in p.room.players){
+			this.messageTo(p.room.players[i].socket, "switchTeam", {id:p.id, team:p.team});
 		}
 	}
 }
@@ -155,6 +159,7 @@ Utils.onDisconnect = function(socket){
 		Utils.onLeaveRoom({}, socket);
 	}
 	game.deletePlayer(socket.id);
+	io.emit("nbPlayers", game.getNbPlayers());
 }
 
 //Fonction d'aide

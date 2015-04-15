@@ -83,7 +83,7 @@ Room.prototype.goal = function(team){
 		this.ball = null;
 		//Si server, on averti tout le monde
 		for(var i in this.players){
-			io.sockets.connected[this.players[i].socket].emit("goal", team);
+			Utils.messageTo(this.players[i].socket, "goal", {team:team, score:this.score[team]});
 		}
 
 		var _this = this;
@@ -98,7 +98,7 @@ Room.prototype.goal = function(team){
 				otherTeam = 2;
 			}
 
-			_this.newBall(_this.map.ballSpawn[team].x, _this.map.ballSpawn[team].y);
+			_this.newBall(_this.map.ballSpawn[otherTeam].x, _this.map.ballSpawn[otherTeam].y);
 		}, 3000);
 	}
 }
