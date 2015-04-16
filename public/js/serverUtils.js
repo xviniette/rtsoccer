@@ -62,6 +62,7 @@ Utils.onMove = function(data, socket){
 Utils.onSpell = function(data, socket){
 	var p = game.getPlayerBySocket(socket.id);
 	if(!p){return;}
+	if(p.room == null){return;}
 	var spell = p.getSpell(data.spell);
 	var isOk = false;
 	if(spell != null){

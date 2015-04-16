@@ -61,6 +61,9 @@ Room.prototype.update = function(){
 	if(this.ball){
 		this.ball.update();
 		if(this.started && Date.now() > this.startTime + this.totalTime){
+			for(var i in this.players){
+				Utils.messageTo(this.players[i].socket, "information", "Fin du match ! Score final "+this.score["1"]+" - "+this.score["2"]+".")
+			}
 			this.ball = null;
 		}
 	}
