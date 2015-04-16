@@ -93,6 +93,8 @@ Utils.onJoinRoom = function(data, socket){
 			if(room.players[i].id != p.id){
 				this.messageTo(room.players[i].socket, "addPlayer", p.getInitPlayer());
 			}
+			//Message informatif
+			this.messageTo(room.players[i].socket, "information", p.pseudo+" rejoint la partie ("+Object.keys(room.players).length+"/"+room.nbPlayer+").");
 		}
 	}
 	io.emit("refreshRooms", game.getRefreshRooms());
@@ -115,6 +117,7 @@ Utils.onLeaveRoom = function(data, socket){
 		}else{
 			for(var i in room.players){
 				this.messageTo(room.players[i].socket, "removePlayer", p.id);
+				this.messageTo(room.players[i].socket, "information", p.pseudo+" quitte la partie ("+Object.keys(room.players).length+"/"+room.nbPlayer+").");
 			}
 		}
 	}
@@ -127,7 +130,7 @@ Utils.onCreateRoom = function(data, socket){
 	if(p.room != null){
 		this.onLeaveRoom({}, socket);
 	}
-	var room = game.addRoom(nbRooms, data.name, data.nb*1, data.time*1, p);
+	var room = game.addRoom(nbRooms, data.name, parseInt(data.nb), parseInt(data.time) * 60 * 1000, p);
 	nbRooms++;
 	p.room = room;
 	p.team = 1;
@@ -148,6 +151,7 @@ Utils.onChangeTeam = function(data, socket){
 		}
 		for(var i in p.room.players){
 			this.messageTo(p.room.players[i].socket, "switchTeam", {id:p.id, team:p.team});
+			this.messageTo(p.room.players[i].socket, "information", p.pseudo+" rejoint l'équipe "+p.team+".");
 		}
 	}
 }

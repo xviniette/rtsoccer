@@ -6,8 +6,8 @@ body{
 #jeu{
 	margin:0;
 	position: relative;
-	/*transform-origin:0 0;
-	transform: scale(0);*/
+	transform-origin:0 0;
+	transform: scale(1);
 }
 
 .rooms{
@@ -38,6 +38,10 @@ body{
 
 	background-color: #282828;
 	color:white;
+}
+
+.tchatInformation{
+	color:green;
 }
 
 #messages{

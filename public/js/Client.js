@@ -41,6 +41,9 @@ Client.prototype.snapshot = function(data){
 	}else{
 		this.room.ball = null;
 	}
+
+	this.room.currentTime = data.currentTime;
+	this.display.timer(this.room.startTime, this.room.totalTime, data.currentTime);
 }
 
 Client.prototype.update = function(){

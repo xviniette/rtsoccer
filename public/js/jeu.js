@@ -1,4 +1,5 @@
 var client;
+var isServer = false;
 
 function joinRoom(id){
 	socket.emit("joinRoom", id);
@@ -41,6 +42,11 @@ $(function(){
 	socket.on("snapshot", function(data){
 		//chaque tick update room
 		client.snapshot(data);
+	});
+
+	socket.on("startGame", function(data){
+		//la game démare
+		client.room.startTime = data.startTime;
 	});
 
 	//Ok
@@ -86,6 +92,11 @@ $(function(){
 	//tchat
 	socket.on("tchat", function(data){
 		$("#messages").append('<li>'+data+'</li>');
+		$("#messages").animate({scrollTop:$("#messages").prop('scrollHeight')}, 30);
+	});
+
+	socket.on("information", function(data){
+		$("#messages").append('<li class="tchatInformation">'+data+'</li>');
 		$("#messages").animate({scrollTop:$("#messages").prop('scrollHeight')}, 30);
 	});
 

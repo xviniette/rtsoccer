@@ -92,8 +92,6 @@ Ball.prototype.update = function(){
 			this.y = this.room.map.startY + this.room.map.height;
 		}
 
-		
-
 		//On regarde si un joueur à le ballon
 		for(var i in this.room.players){
 			//on check si un joueur passe dessus
