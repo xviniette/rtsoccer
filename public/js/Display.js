@@ -93,6 +93,7 @@ Display.prototype.draw = function(){
 			this.ctx.fillStyle = "blue";
 		}
 		this.ctx.beginPath();
+		
 		this.ctx.arc(players[i].x,players[i].y,players[i].radius,0,2*Math.PI);
 		this.ctx.fill();
 		this.ctx.fillStyle = "white";
