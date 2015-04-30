@@ -1,0 +1,34 @@
+\chapter{Rapport technique}
+
+
+\section{Conception}
+
+Le jeu RTSoccer est un jeu de football où les joueurs se déplace sur un terrain et se dispute un ballon en s'aidant de capacités.
+
+On caractérise les joueurs par leur pseudo afin de les différencier des autres joueurs, par leurs équipe ainsi que par leur position sur le terrain pour pouvoir gérer leur déplacement. Un joueur peut utiliser des capacités, il en posséde huits  (quatres avec le ballon, quatres sans le ballon) différentes modifiant chacune l'environnement. Ces capacités pouvant modifier l'état du joueur (notament sa vitesse de déplacement), on caractérise un joueur également par sa vitesse de déplacement.
+La balle que se dispute les joueurs devant se déplacer sur le terrain, on la caractèrise par sa position sur le terrain ainsi que par sa vitesse de déplacement.
+Le ballon ainsi que les joueurs évoluent dans le même environnement.
+
+RTSoccer étant un jeu en ligne, une architecture client serveur est retenu pour le mettre en oeuvre.
+Les joueurs et la balle se déplacant en même temps sur le terrain, le serveur possède pour chaques parties, les informations sur les joueurs et le ballon ainsi que d'autres informations concernant la partie : le score, le temps et qui controle quel joueurs (quel client controle quel joueur).
+Les clients modifient les caractéristiques de leur joueur (déplacements, lancements de capacités...) et envoient ces modifications au serveur qui les renvoient au autres client de la partie (ICI : parler de la gestion du lagg)
+
+Le chat entre les joueurs ?
+
+
+\section{Développement}
+
+
+
+\section{Résultats}
+
+------------------------------
+Comparaison prévu/réelement fait
+------------------------------
+
+
+\section{Perspectives de developpement}
+
+------------------------------
+Que peut-on faire de plus ?????
+------------------------------
