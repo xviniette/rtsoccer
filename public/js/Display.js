@@ -93,7 +93,6 @@ Display.prototype.draw = function(){
 			this.ctx.fillStyle = "blue";
 		}
 		this.ctx.beginPath();
-		
 		this.ctx.arc(players[i].x,players[i].y,players[i].radius,0,2*Math.PI);
 		this.ctx.fill();
 		this.ctx.fillStyle = "white";
@@ -105,7 +104,7 @@ Display.prototype.draw = function(){
 	}
 
 	if(ball){
-		this.ctx.fillStyle = "yellow";
+		this.ctx.fillStyle = "white";
 		this.ctx.beginPath();
 		this.ctx.arc(ball.x,ball.y,ball.radius,0,2*Math.PI);
 		this.ctx.fill();
@@ -132,4 +131,19 @@ Display.prototype.hideRooms = function(){
 
 Display.prototype.showRooms = function(){
 	$(".rooms").show();
+}
+
+Display.prototype.timer = function(startTime, TotalTime, currentTime){
+	var min, sec, timeleft;
+	if(startTime == 0){
+		timeleft = TotalTime;
+	}else{
+		timeleft = startTime + TotalTime - currentTime;
+		if(timeleft<0){
+			timeleft = 0;
+		}
+	}
+	min = Math.floor(timeleft/60000);
+	sec = Math.floor((timeleft-min*60000)/1000);
+	$("#timeleft").text(min+":"+sec);
 }

@@ -1,4 +1,4 @@
-var Ball = function(json){
+﻿var Ball = function(json){
 	this.room;
 
 	this.player = null;
@@ -91,8 +91,6 @@ Ball.prototype.update = function(){
 			this.dy *= -1;
 			this.y = this.room.map.startY + this.room.map.height;
 		}
-
-		
 
 		//On regarde si un joueur à le ballon
 		for(var i in this.room.players){

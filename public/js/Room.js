@@ -24,11 +24,31 @@ Room.prototype.init = function(json){
 	for(var i in json){
 		this[i] = json[i];
 	}
-	this.start();
+}
+
+Room.prototype.haveToStart = function(){
+	var _this = this;
+	if(Object.keys(this.players).length == this.nbPlayer){
+		for(var i in this.players){
+			Utils.messageTo(this.players[i].socket, "information", "La partie est prête et va démarrer dans 5 secondes");
+		}
+		setTimeout(function(){
+			_this.start();
+		}, 5000);
+	}
 }
 
 Room.prototype.start = function(){
-	this.newBall(this.map.ballSpawn[0].x, this.map.ballSpawn[0].x);
+	var _this = this;
+	this.started = true;
+	this.startTime = Date.now();
+	this.newBall(this.map.ballSpawn[0].x, this.map.ballSpawn[0].y);
+	for(var i in _this.players){
+		Utils.messageTo(_this.players[i].socket, "startGame", {startTime:this.startTime});
+		_this.players[i].x = _this.map.playerSpawn[_this.players[i].team].x;
+		_this.players[i].y = _this.map.playerSpawn[_this.players[i].team].y;
+		_this.players[i].direction = null;
+	}
 }
 
 Room.prototype.update = function(){
@@ -40,6 +60,12 @@ Room.prototype.update = function(){
 	}
 	if(this.ball){
 		this.ball.update();
+		if(this.started && Date.now() > this.startTime + this.totalTime){
+			for(var i in this.players){
+				Utils.messageTo(this.players[i].socket, "information", "Fin du match ! Score final "+this.score["1"]+" - "+this.score["2"]+".")
+			}
+			this.ball = null;
+		}
 	}
 
 	if(isServer){
@@ -111,6 +137,9 @@ Room.prototype.addPlayer = function(player){
 	this.players.push(player);
 	player.x = this.map.playerSpawn[player.team].x;
 	player.y = this.map.playerSpawn[player.team].y;
+	if(isServer){
+		this.haveToStart();
+	}
 }
 
 Room.prototype.removePlayer = function(playerID){
@@ -138,6 +167,7 @@ Room.prototype.getSnapshot = function(){
 	if(this.ball != null){
 		d.ball = this.ball.getInfos();
 	}
+	d.currentTime = this.currentTime;
 	return d;
 }
 

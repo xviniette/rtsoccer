@@ -1,4 +1,4 @@
-var Client = function(){
+﻿var Client = function(){
 	this.pID;
 	this.ping = 0;
 	this.fps = 40;
@@ -41,6 +41,9 @@ Client.prototype.snapshot = function(data){
 	}else{
 		this.room.ball = null;
 	}
+
+	this.room.currentTime = data.currentTime;
+	this.display.timer(this.room.startTime, this.room.totalTime, data.currentTime);
 }
 
 Client.prototype.update = function(){
