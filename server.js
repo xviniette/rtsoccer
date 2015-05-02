@@ -1,6 +1,6 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+﻿var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 var uuid = require('node-uuid');
 var fs = require('fs');
 
@@ -14,6 +14,8 @@ eval(fs.readFileSync('./public/js/serverUtils.js')+'');
 eval(fs.readFileSync('./public/js/Maths.js')+'');
 eval(fs.readFileSync('./public/js/Spell.js')+'');
 
+http.listen(80);
+
 app.get('/',function(req, res){
 	res.sendFile(__dirname + '/public/index.html');
 });
@@ -23,7 +25,7 @@ app.get( '/*' , function( req, res, next ) {
 	res.sendFile( __dirname + '/' + file );
 });
 
-http.listen(1321, function(){});
+
 
 var isServer = true;
 var fps = 40;
