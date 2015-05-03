@@ -10,8 +10,6 @@
 
 	this.room;
 
-	this.preX =0;
-	this.preY =0;
 }
 
 Client.prototype.initRoom = function(data){
@@ -29,11 +27,10 @@ Client.prototype.snapshot = function(data){
 	for(var i in data.players){
 		for(var j in this.room.players){
 			if(data.players[i].id == this.room.players[j].id){
+				this.room.players[j].preX = this.room.players[j].x;
+				this.room.players[j].preY = this.room.players[j].y;
 				this.room.players[j].init(data.players[i]);
-				this.room.players[j].preX = this.preX;
-				this.room.players[j].preY = this.preY;
-				this.preX=data.players[i].x;
-				this.preY=data.players[i].y;
+				
 
 			}
 		}
