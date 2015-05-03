@@ -11,6 +11,9 @@ var Player = function(json){
 	this.radius = 20;
 	this.direction = null;
 
+	this.preX;
+	this.preY;
+
 	this.team = 0;
 	this.speed = 10;
 
@@ -31,6 +34,21 @@ var Player = function(json){
 		}
 	};
 
+
+	var sp = {
+		imgL: "public/img/run2L"+this.team+".png",
+		imgW: "public/img/run2W"+this.team+".png",
+		nameL: "run2L"+this.team+".png",
+		nameW: "run2W"+this.team+".png",
+		x: 0,
+		y: 0,
+		w: 82,
+		h: 70,
+		animation: [0,82,164,246,328,410,492,574,652,738,820,902],
+		fps:40
+	};
+	this.sprites = new Sprite(sp);
+
 	this.init(json);
 }
 
@@ -45,6 +63,7 @@ Player.prototype.setDirection = function(x, y){
 }
 
 Player.prototype.move = function(){
+	console.log("pouet "+this.x);
 	if(this.timeStun > Date.now()){
 		this.direction = null;
 	}
@@ -64,7 +83,6 @@ Player.prototype.move = function(){
 
 Player.prototype.update = function(){
 	this.move();
-
 	if(this.x < this.room.map.startX){
 		this.dx *= -1;
 		this.x = this.room.map.startX;
@@ -116,4 +134,10 @@ Player.prototype.getSnapshotPlayer = function(){
 		x:parseInt(this.x),
 		y:parseInt(this.y)
 	};
+}
+
+Player.prototype.changeTeam = function(team){
+	console.log("pouet"+team);
+	sprites.changeImgL("public/img/run2L"+this.team+".png");
+	sprites.changeImgW("public/img/run2W"+this.team+".png");
 }

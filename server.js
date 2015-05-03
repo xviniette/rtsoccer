@@ -13,8 +13,9 @@ eval(fs.readFileSync('./public/js/Room.js')+'');
 eval(fs.readFileSync('./public/js/serverUtils.js')+'');
 eval(fs.readFileSync('./public/js/Maths.js')+'');
 eval(fs.readFileSync('./public/js/Spell.js')+'');
+eval(fs.readFileSync('./public/js/Sprite.js')+'');
 
-http.listen(80);
+server.listen(80);
 
 app.get('/',function(req, res){
 	res.sendFile(__dirname + '/public/index.html');
