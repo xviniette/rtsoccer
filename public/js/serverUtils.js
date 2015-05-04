@@ -122,7 +122,6 @@ Utils.onLeaveRoom = function(data, socket){
 }
 
 Utils.onCreateRoom = function(data, socket){
-	console.log("la");
 	var p = game.getPlayerBySocket(socket.id);
 	if(!p){return;}
 	if(p.room != null){

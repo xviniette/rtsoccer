@@ -34,12 +34,16 @@ var Player = function(json){
 		}
 	};
 
-
+	var t;
+	if(this.team==0){
+		t ="1";
+	}
 	var sp = {
-		imgL: "public/img/run2L"+this.team+".png",
-		imgW: "public/img/run2W"+this.team+".png",
-		nameL: "run2L"+this.team+".png",
-		nameW: "run2W"+this.team+".png",
+		imgL: "public/img/run2L",
+		imgW: "public/img/run2W",
+		nameL: "run2L",
+		nameW: "run2W",
+		team:this.team,
 		x: 0,
 		y: 0,
 		w: 82,
@@ -136,8 +140,3 @@ Player.prototype.getSnapshotPlayer = function(){
 	};
 }
 
-Player.prototype.changeTeam = function(team){
-	console.log("pouet"+team);
-	sprites.changeImgL("public/img/run2L"+this.team+".png");
-	sprites.changeImgW("public/img/run2W"+this.team+".png");
-}

@@ -95,7 +95,7 @@ Display.prototype.draw = function(){
 		this.ctx.beginPath();
 		this.ctx.arc(players[i].x,players[i].y,players[i].radius,0,2*Math.PI);
 		this.ctx.fill();*/
-		players[i].sprites.draw(this.ctx,players[i].x,players[i].y,players[i].preX,players[i].preY);
+		//players[i].sprites.draw(this.ctx,players[i].x,players[i].y,players[i].preX,players[i].preY,players[i].team);
 		this.ctx.fillStyle = "white";
 		if(players[i].id == client.pID){
 			this.ctx.fillStyle = "yellow";

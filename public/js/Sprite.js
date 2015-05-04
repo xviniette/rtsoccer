@@ -1,9 +1,13 @@
 var Sprite = function(data){
-	// data = {imgL,imgW, nameL,nameW, startx, starty, width, height, animation, fps}
+	// data = {imgL,imgW, nameL,nameW,team, startx, starty, width, height, animation, fps}
+	if(data.team == 0){
+		data.team ="";
+	}
+	this.team = data.team;
 	this.imgL = new Image();
-	this.imgL.src =  data.imgL;
+	this.imgL.src =  data.imgL+data.team+".png";
 	this.imgW = new Image();
-	this.imgW.src = data.imgW;
+	this.imgW.src = data.imgW+data.team+".png";
 	this.direc;
 	this.name = data.name;
 	this.startX = data.x || 0;
@@ -17,9 +21,11 @@ var Sprite = function(data){
 	this.lastChangeTransiTime = 0;
 }
 
-Sprite.prototype.draw = function(ctx, x, y,precX,precY, width, height){
-	//console.log(x + " "+y+" "+precX+" "+precY);
-	
+Sprite.prototype.draw = function(ctx, x, y,precX,precY,team, width, height){
+	//console.log(this.team + " " + team);
+	if(team != this.team){
+		this.changeTeam(team);
+	}
 		if(Date.now() > this.lastChangeTransiTime + 1000/this.fps){
 			//changement de transition
 			this.index++;
@@ -61,14 +67,11 @@ Sprite.prototype.draw = function(ctx, x, y,precX,precY, width, height){
 
 }
 
-Sprite.prototype.changeImgL = function(img){
-	var image = new Image();
-	image.src = img;
-	this.imgL = image;
-}
-
-Sprite.prototype.changeImgW = function(img){
-	var image = new Image();
-	image.src = img;
-	this.imgW = image;
+Sprite.prototype.changeTeam = function(team){
+	this.imgL.src = this.imgL.src.replace(".png",team+".png");
+	this.imgW.src = this.imgW.src.replace(".png",team+".png");
+	this.team = team;
+	if(this.team == 2){
+		this.direc = "L";
+	}
 }

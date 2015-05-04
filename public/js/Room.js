@@ -137,6 +137,7 @@ Room.prototype.addPlayer = function(player){
 	this.players.push(player);
 	player.x = this.map.playerSpawn[player.team].x;
 	player.y = this.map.playerSpawn[player.team].y;
+	//player.changeTeam(player.team);
 	if(isServer){
 		this.haveToStart();
 	}
