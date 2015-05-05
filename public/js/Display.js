@@ -87,15 +87,25 @@ Display.prototype.draw = function(){
 
 	//PERSO
 	for(var i in players){
-		/*if(players[i].team == 1){
+		if(players[i].team == 1){
 			this.ctx.fillStyle = "red";
 		}else{
 			this.ctx.fillStyle = "blue";
 		}
-		this.ctx.beginPath();
+		/*this.ctx.beginPath();
 		this.ctx.arc(players[i].x,players[i].y,players[i].radius,0,2*Math.PI);
 		this.ctx.fill();*/
-		//players[i].sprites.draw(this.ctx,players[i].x,players[i].y,players[i].preX,players[i].preY,players[i].team);
+
+		if(players[i].team == 1){
+			players[i].setSprite(players[i].team,img.blue);
+		}else{
+			players[i].setSprite(players[i].team,img.red);
+		}
+
+		players[i].sprite.draw(this.ctx,players[i].x-(82/2),players[i].y-(82/2),82,71);
+
+		
+		
 		this.ctx.fillStyle = "white";
 		if(players[i].id == client.pID){
 			this.ctx.fillStyle = "yellow";

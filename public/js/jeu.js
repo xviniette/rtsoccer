@@ -8,7 +8,10 @@ function joinRoom(id){
 $(function(){
 
 	var imgs = {
-		tiles:"public/img/tiles.png"
+		tiles:"public/img/tiles.png",
+		blue:"public/img/run2L1.png",
+		red:"public/img/run2L2.png",
+		neutre:"public/img/run2L0.png"
 	}
 
 	client = new Client();

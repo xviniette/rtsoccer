@@ -1,6 +1,6 @@
 var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 var uuid = require('node-uuid');
 var fs = require('fs');
 
@@ -15,11 +15,8 @@ eval(fs.readFileSync('./public/js/Maths.js')+'');
 eval(fs.readFileSync('./public/js/Spell.js')+'');
 eval(fs.readFileSync('./public/js/Sprite.js')+'');
 
-<<<<<<< HEAD
 server.listen(80);
 
-=======
->>>>>>> parent of a496acf... maj port server
 app.get('/',function(req, res){
 	res.sendFile(__dirname + '/public/index.html');
 });
@@ -28,8 +25,6 @@ app.get( '/*' , function( req, res, next ) {
 	var file = req.params[0];
 	res.sendFile( __dirname + '/' + file );
 });
-
-http.listen(1321, function(){});
 
 var isServer = true;
 var fps = 40;
@@ -102,4 +97,3 @@ io.on('connection', function(socket){
 		socket.emit("pong", data);
 	});
 });
-

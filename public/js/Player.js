@@ -11,14 +11,16 @@ var Player = function(json){
 	this.radius = 20;
 	this.direction = null;
 
-	this.preX;
-	this.preY;
+	this.precX=0;
+	this.precY=0;
 
 	this.team = 0;
 	this.speed = 10;
 
 	this.boostSpeed = 0;
 	this.timeStun = 0;
+
+	this.sprite;
 
 	var flash = new Flash();
 	this.spells = {
@@ -33,26 +35,6 @@ var Player = function(json){
 			3:flash
 		}
 	};
-
-	var t;
-	if(this.team==0){
-		t ="1";
-	}
-	var sp = {
-		imgL: "public/img/run2L",
-		imgW: "public/img/run2W",
-		nameL: "run2L",
-		nameW: "run2W",
-		team:this.team,
-		x: 0,
-		y: 0,
-		w: 82,
-		h: 70,
-		animation: [0,82,164,246,328,410,492,574,652,738,820,902],
-		fps:40
-	};
-	this.sprites = new Sprite(sp);
-
 	this.init(json);
 }
 
@@ -67,7 +49,6 @@ Player.prototype.setDirection = function(x, y){
 }
 
 Player.prototype.move = function(){
-	console.log("pouet "+this.x);
 	if(this.timeStun > Date.now()){
 		this.direction = null;
 	}
@@ -138,5 +119,27 @@ Player.prototype.getSnapshotPlayer = function(){
 		x:parseInt(this.x),
 		y:parseInt(this.y)
 	};
+}
+
+Player.prototype.setSprite = function(team,img){
+	var tab = [0,1,2,3,4,5,6,7,8,9,10,11];
+	var nom = "team"+team;
+	var sp = {
+		img:img,
+		name:nom,
+		x:0,
+		y:0,
+		w:82,
+		h:71,
+		animation:tab,
+		fps:40
+	}
+	if(this.sprite){// afin d'eviter de reconstuire une instance ce sprite si elle existe deja
+		if(this.sprite.name != "team"+team){
+			this.sprite = new Sprite(sp);
+		}
+	}else{
+		this.sprite = new Sprite(sp);
+	}
 }
 
