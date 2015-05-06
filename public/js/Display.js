@@ -95,15 +95,40 @@ Display.prototype.draw = function(){
 		/*this.ctx.beginPath();
 		this.ctx.arc(players[i].x,players[i].y,players[i].radius,0,2*Math.PI);
 		this.ctx.fill();*/
-
 		if(players[i].team == 1){
-			players[i].setSprite(players[i].team,img.blue);
+			if(players[i].x == players[i].precX && players[i].y == players[i].precY){
+				players[i].setSprite("immo",img.blue);
+			}else{
+				players[i].setSprite(players[i].team,img.blue);
+			}
+			
 		}else{
-			players[i].setSprite(players[i].team,img.red);
+			if(players[i].x == players[i].precX && players[i].y == players[i].precY){
+				players[i].setSprite("immo",img.red);
+			}else{
+				players[i].setSprite(players[i].team,img.red);
+			}
 		}
 
-		players[i].sprite.draw(this.ctx,players[i].x-(82/2),players[i].y-(82/2),82,71);
+		var retourne =0;
 
+		if(players[i].x >= players[i].precX){
+			retourne =1;
+		}
+
+		players[i].precX = players[i].x;
+		players[i].precY = players[i].y;
+
+		/*if(retourne == 1){
+			this.ctx.save();
+			this.ctx.scale(-1,1);
+		}*/
+
+		players[i].sprite.draw(this.ctx,players[i].x-(82/2),players[i].y-(82/2),retourne,82,71);
+
+		/*if(retourne == 1){
+			this.ctx.restore();
+		}*/
 		
 		
 		this.ctx.fillStyle = "white";

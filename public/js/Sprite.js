@@ -13,16 +13,20 @@ var Sprite = function(data){
 	this.lastChangeTransiTime = 0;
 }
 
-Sprite.prototype.draw = function(ctx, x, y, width, height){
+Sprite.prototype.draw = function(ctx, x, y, retourne, width, height){
 	if(Date.now() > this.lastChangeTransiTime + 1000/this.fps){
 		//changement de transition
 		this.index++;
 		if(this.index >= this.transitions.length){
 			this.index = 0;
 		}
+		/*if(this.name == "immo"){
+			this.index = this.transitions.length-2;
+		}*/
 		this.lastChangeTransiTime = Date.now();
 	}
-		
+
+
 	var w = this.width;
 	if(width){
 		w = width;
@@ -31,5 +35,8 @@ Sprite.prototype.draw = function(ctx, x, y, width, height){
 	if(height){
 		h = height;
 	}
+
+	
 	ctx.drawImage(this.img, this.startX + this.transitions[this.index] * this.width, this.startY, this.width, this.height, x, y, w, h);
+
 }

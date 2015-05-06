@@ -122,8 +122,16 @@ Player.prototype.getSnapshotPlayer = function(){
 }
 
 Player.prototype.setSprite = function(team,img){
-	var tab = [0,1,2,3,4,5,6,7,8,9,10,11];
-	var nom = "team"+team;
+	var tab;
+	var nom;
+	if(team == "immo"){
+		tab = [10];
+		nom = team;
+	}else{
+		tab = [0,1,2,3,4,5,6,7,8,9,10,11];
+		nom = "team"+team;
+	}
+	
 	var sp = {
 		img:img,
 		name:nom,
@@ -137,7 +145,9 @@ Player.prototype.setSprite = function(team,img){
 	if(this.sprite){// afin d'eviter de reconstuire une instance ce sprite si elle existe deja
 		if(this.sprite.name != "team"+team){
 			this.sprite = new Sprite(sp);
-		}
+		}/*else if(this.sprite.name == "immo"){
+			this.sprite.name = "immo";
+		}*/
 	}else{
 		this.sprite = new Sprite(sp);
 	}
