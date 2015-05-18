@@ -54,9 +54,7 @@ Game.prototype.getNoneRoomPlayers = function(){
 Game.prototype.getRefreshRooms = function(){
 	var rooms = [];
 	for(var i in this.rooms){
-		if(!this.rooms[i].started){
-			rooms.push(this.rooms[i].getRefreshInfo());
-		}
+		rooms.push(this.rooms[i].getRefreshInfo());
 	}
 	return rooms;
 }

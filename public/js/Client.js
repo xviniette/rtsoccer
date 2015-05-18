@@ -2,9 +2,11 @@ var Client = function(){
 	this.pID;
 	this.ping = 0;
 	this.fps = 40;
-	this.display = new Display({client:this});
+	this.interp = 50;
+	this.display;
 	this.spell = 0;
 	this.mouseCoord = {};
+	this.scale = 1;
 
 	this.images;
 
@@ -19,6 +21,7 @@ Client.prototype.initRoom = function(data){
 		this.room.players.push(new Player(data.players[i]));
 	}
 	this.display.hideRooms();
+	this.display.initSpell();
 }
 
 
@@ -26,6 +29,10 @@ Client.prototype.snapshot = function(data){
 	for(var i in data.players){
 		for(var j in this.room.players){
 			if(data.players[i].id == this.room.players[j].id){
+				data.players[i].t = Date.now();
+				//this.room.players[j].positions.push(data.players[i]);
+				this.room.players[j].preX = this.room.players[j].x;
+				this.room.players[j].preY = this.room.players[j].y;
 				this.room.players[j].init(data.players[i]);
 			}
 		}
@@ -48,6 +55,9 @@ Client.prototype.snapshot = function(data){
 
 Client.prototype.update = function(){
 	if(this.room != null){
+		/*for(var i in this.room.players){
+			this.room.players[i].interpolation();
+		}*/
 		this.display.draw();
 	}
 }
@@ -81,6 +91,8 @@ Client.prototype.keySpell = function(keyCode){
 }
 
 Client.prototype.mouseClick = function(x, y){
+	x = parseInt(x/this.scale);
+	y = parseInt(y/this.scale);
 	if(this.spell != 0){
 		socket.emit("spell", {x:x, y:y,spell:this.spell});
 		this.spell = 0;
@@ -90,6 +102,8 @@ Client.prototype.mouseClick = function(x, y){
 }
 
 Client.prototype.mouseMove = function(x, y){
+	x = parseInt(x/this.scale);
+	y = parseInt(y/this.scale);
 	this.mouseCoord = {x:x, y:y};
 }
 
@@ -118,8 +132,7 @@ Client.prototype.loadImages = function(sources){
 		this.images[src] = new Image();
 		this.images[src].onload = function() {
 			if(++loadedImages >= numImages) {
-				console.log("ok");
-				//_this.display = new Display({client:this});
+				_this.display = new Display({client:_this});
 			}
 		};
 		this.images[src].src = sources[src];

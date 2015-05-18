@@ -12,6 +12,7 @@ $(function(){
 	}
 
 	client = new Client();
+	setScreenSize();
 	client.loadImages(imgs);
 	socket = io();
 	//Ok
@@ -51,7 +52,9 @@ $(function(){
 
 	//Ok
 	socket.on("refreshRooms", function(data){
-		client.display.refreshRooms(data);
+		if(client.display){
+			client.display.refreshRooms(data);
+		}
 	});
 
 	//Ok
@@ -72,7 +75,6 @@ $(function(){
 		if(client.room){
 			for(var i in client.room.players){
 				if(client.room.players[i].id == data.id){
-					console.log("lol");
 					client.room.players[i].team = data.team;
 					break;
 				}
@@ -149,4 +151,60 @@ $(function(){
 		//Gestion des touches
 		client.keySpell(e.charCode);
 	});
+
+	$(window).resize(function(){
+		setScreenSize();
+	});
+
 });
+
+var lerp = function(p, n, t) { var _t = Number(t); _t = (Math.max(0, Math.min(1, _t))); return (p + _t * (n - p)); };
+var v_lerp = function(v,tv,t) { return { x: lerp(v.x, tv.x, t), y:lerp(v.y, tv.y, t) }; };
+
+function getNewPosition(pos1, pos2, t){
+	var difference = pos2.t - t;
+	var max_difference = (pos2.t - pos1.t);
+	var time_point = (difference/max_difference);
+
+	return v_lerp(pos1, pos2, time_point);
+}
+
+
+var setScreenSize = function(){
+	var jeu = $("#jeu");
+	var bW = 1050;
+	var bH = 640;
+
+	var sW = $(window).width();
+	var sH = $(window).height();
+
+	var rW = sW/bW;
+	var rH = sH/bH;
+
+	if(rW < rH){
+		//on gere en fonction de la largeur
+		var scale = sW/bW;
+		jeu.css({
+			'-webkit-transform' : 'scale(' + scale + ')',
+			'-moz-transform'    : 'scale(' + scale + ')',
+			'-ms-transform'     : 'scale(' + scale + ')',
+			'-o-transform'      : 'scale(' + scale + ')',
+			'transform'         : 'scale(' + scale + ')'
+		});
+	}else{
+		//on gere en fonction de la hauteur
+		var scale = sH/bH;
+		jeu.css({
+			'-webkit-transform' : 'scale(' + scale + ')',
+			'-moz-transform'    : 'scale(' + scale + ')',
+			'-ms-transform'     : 'scale(' + scale + ')',
+			'-o-transform'      : 'scale(' + scale + ')',
+			'transform'         : 'scale(' + scale + ')'
+		});
+	}
+
+	jeu.css("top", (sH/2 - (bH/2)*scale)+"px");
+	jeu.css("left", (sW/2 - (bW/2)*scale)+"px");
+
+	client.scale = scale;
+}

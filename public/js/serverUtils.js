@@ -44,6 +44,21 @@ Utils.onTchat = function(data, socket){
 				}
 			}
 			break;
+			case "/name":
+			var itsOk = true;
+			if(split.length >= 2 && split[1] != ""){
+				for(var i in game.players){
+					if(game.players[i].pseudo == split[1]){
+						itsOk = false;
+						break;
+					}
+				}
+				if(itsOk){
+					p.pseudo = split[1];
+					this.messageTo(p.socket, "information", "Vous appelez maintenant "+p.pseudo+" !");
+				}
+			}
+			break;
 		}
 	}else{
 		for(var i in players){

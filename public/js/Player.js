@@ -17,6 +17,13 @@ var Player = function(json){
 	this.boostSpeed = 0;
 	this.timeStun = 0;
 
+	this.sprite;
+
+	this.preX = this.x;
+	this.preY = this.y;
+
+	this.positions = [];
+
 	var flash = new Flash();
 	this.spells = {
 		withBall:{
@@ -42,6 +49,21 @@ Player.prototype.init = function(json){
 
 Player.prototype.setDirection = function(x, y){
 	this.direction = {"x":x, "y":y};
+}
+
+Player.prototype.interpolation = function(){
+	var d = Date.now() - client.interp;
+	for(var i = 0; i < this.positions.length - 1; i++){
+		if(this.positions[i].t <= d && this.positions[i + 1].t > d){
+			var pos = getNewPosition(this.positions[i], this.positions[i+1], d);
+			this.preX = this.positions[i].x;
+			this.preY = this.positions[i].y;
+			this.x = pos.x;
+			this.y = pos.y;
+			this.positions.splice(0, i - 1);
+			break;
+		}
+	}
 }
 
 Player.prototype.move = function(){

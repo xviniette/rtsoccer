@@ -9,23 +9,23 @@
 	<div id="jeu">
 		<canvas id="canvas" width="800" height="560"></canvas>
 		<div class="informations">
-			<div id="spells">
-			</div>
+			<ul id="spells"></ul>
 			<div id="timeleft"></div>
 			<div class="score">
-				<div id="score1">0</div>
-				<div id="score2">0</div>
+				<span id="score1">0</span> | <span id="score2">0</span>
 			</div>
-			<div class="actions"><button id="switch">Changer d'équipe</button><button id="leave">Quitter</button></div>
+			<ul class="buttons"><button id="switch">Changer d'équipe</button><button id="leave">Quitter</button></ul>
 		</div>
 		<div class="rooms">
 			<span id="nbPlayers">0</span> joueur(s) en ligne
+			<h1>Créer une partie</h1>
 			<form id="createRoom">
 				<input type="text" placeholder="Nom de la partie" id="roomName">
-				<input type="number" id="roomNbPlayer" value="4" max="20" min="2" step="2"> joueurs
+				<input type="number" id="roomNbPlayer" value="2" max="20" min="2" step="2"> joueurs, 
 				<input type="number" id="roomTime" value="5" max="20" min="1" step="1"> minutes
-				<input type="submit" value="Créer partie">
+				<input type="submit" value="Créer la partie">
 			</form>
+			<h1>Parties en cours</h1>
 			<div id="rooms"></div>	
 		</div>
 		<div class="tchat">
@@ -35,7 +35,7 @@
 				<input type="submit" value="Send">
 			</forum>
 		</div>
-	</div>
+	</div>	
 	<script src="public/js/socketio.js"></script>
 	<script src="public/js/jquery.js"></script>
 	<script src="public/js/Player.js"></script>
@@ -47,5 +47,6 @@
 	<script src="public/js/Spell.js"></script>
 	<script src="public/js/Ball.js"></script>
 	<script src="public/js/Client.js"></script>
+	<script src="public/js/Sprite.js"></script>
 </body>
 </html>

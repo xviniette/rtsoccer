@@ -137,7 +137,7 @@ Room.prototype.addPlayer = function(player){
 	this.players.push(player);
 	player.x = this.map.playerSpawn[player.team].x;
 	player.y = this.map.playerSpawn[player.team].y;
-	if(isServer){
+	if(isServer && !this.started){
 		this.haveToStart();
 	}
 }
@@ -157,7 +157,8 @@ Room.prototype.getRefreshInfo = function(){
 		nom:this.nom,
 		nbPlayer:this.nbPlayer,
 		totalTime:this.totalTime,
-		nb:this.getPlayers().length
+		nb:this.getPlayers().length,
+		started:this.started
 	}
 }
 

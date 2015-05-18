@@ -5,7 +5,9 @@ body{
 
 #jeu{
 	margin:0;
-	position: relative;
+	position: absolute;
+	top:0px;
+	left:0px;
 	transform-origin:0 0;
 	transform: scale(1);
 }
@@ -15,20 +17,18 @@ body{
 	width:800px;
 	height:640px;
 	background-color: white;
+	text-align: center;
+	overflow: auto;
+}
+
+#rooms ul{
+	list-style: none;
 }
 
 #canvas{
 	position: absolute;
 }
 
-.informations{
-	position: absolute;
-	top:560px;
-	width:800px;
-	height:80px;
-	background-color: #212121;
-	color:white;
-}
 
 .tchat{
 	position: absolute;
@@ -52,3 +52,49 @@ body{
 	padding-left: 5px;
 	margin-bottom: 10px;
 }
+
+.informations{
+	position: absolute;
+	top:560px;
+	width:800px;
+	height:80px;
+	background-color: #212121;
+	color:white;
+}
+
+
+/* Spells */
+
+#spells{
+	list-style: none;
+}
+
+#spells li{
+	display: inline-block;
+	vertical-align: top;
+	cursor: pointer;
+}
+
+.cd {
+	text-align: center;
+	background-color:black;
+	font-size: 20px;
+	font-weight: bold;
+	color:white;
+	cursor: default;
+}
+
+/* Timer */
+#timeleft{
+	color:yellow;
+	font-weight: bold;
+}
+
+#score1{
+	color:blue;
+}
+
+#score2{
+	color:red;
+}
+

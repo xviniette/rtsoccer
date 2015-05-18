@@ -65,7 +65,7 @@ Ball.prototype.hasGoalCollision = function(){
 
 Ball.prototype.update = function(){
 	if(this.player == null){
-		//physic de la ball
+		//Le ballon n'est pas controlé, on gère sa physique
 		this.x += this.dx;
 		this.y += this.dy;
 		this.dx *= this.friction;
@@ -75,7 +75,7 @@ Ball.prototype.update = function(){
 		if(goal){
 			this.room.goal(goal);
 		}
-
+		
 		if(this.x < this.room.map.startX){
 			this.dx *= -1;
 			this.x = this.room.map.startX;
