@@ -34,6 +34,7 @@ var game = new Game();
 
 //physic game
 setInterval(function(){
+	
 	game.update();
 }, 1000/FPS);
 
