@@ -1,8 +1,6 @@
 var Client = function(){
 	this.pID;
 	this.ping = 0;
-	this.fps = 40;
-	this.interp = 50;
 	this.display;
 	this.spell = 0;
 	this.mouseCoord = {};
@@ -20,20 +18,20 @@ Client.prototype.initRoom = function(data){
 		data.players[i].room = this.room;
 		this.room.players.push(new Player(data.players[i]));
 	}
+	$("#score1").text(data.score["1"]);
+	$("#score2").text(data.score["2"]);
 	this.display.hideRooms();
 	this.display.initSpell();
 }
 
 
 Client.prototype.snapshot = function(data){
+	var d = Date.now();
 	for(var i in data.players){
 		for(var j in this.room.players){
 			if(data.players[i].id == this.room.players[j].id){
-				data.players[i].t = Date.now();
-				//this.room.players[j].positions.push(data.players[i]);
-				this.room.players[j].preX = this.room.players[j].x;
-				this.room.players[j].preY = this.room.players[j].y;
-				this.room.players[j].init(data.players[i]);
+				data.players[i].t = d;
+				this.room.players[j].positions.push(data.players[i]);
 			}
 		}
 	}
@@ -41,7 +39,11 @@ Client.prototype.snapshot = function(data){
 	if(data.ball){
 		if(this.room.ball){
 			this.room.ball.player = null;
-			this.room.ball.init(data.ball);
+			if(data.ball.player){
+				this.room.ball.player = data.ball.player;
+			}
+			data.ball.t = d;
+			this.room.ball.positions.push(data.ball);
 		}else{
 			this.room.ball = new Ball(data.ball);
 		}
@@ -54,10 +56,14 @@ Client.prototype.snapshot = function(data){
 }
 
 Client.prototype.update = function(){
+	var d = Date.now();
 	if(this.room != null){
-		/*for(var i in this.room.players){
-			this.room.players[i].interpolation();
-		}*/
+		for(var i in this.room.players){
+			this.room.players[i].interpolate(d);
+		}
+		if(this.room.ball){
+			this.room.ball.interpolate(d);
+		}
 		this.display.draw();
 	}
 }
@@ -133,6 +139,8 @@ Client.prototype.loadImages = function(sources){
 		this.images[src].onload = function() {
 			if(++loadedImages >= numImages) {
 				_this.display = new Display({client:_this});
+				console.log("requete rooms");
+				socket.emit("refreshRooms");
 			}
 		};
 		this.images[src].src = sources[src];

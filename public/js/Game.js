@@ -3,6 +3,12 @@ var Game = function(){
 	this.rooms = [];
 }
 
+Game.prototype.update = function(){
+	for(var i in this.rooms){
+		this.rooms[i].update();
+	}
+}
+
 Game.prototype.addPlayer = function(player){
 	this.players[player.socket] = player;
 }

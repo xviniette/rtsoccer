@@ -15,7 +15,10 @@ var Room = function(json){
 	this.players = [];
 	this.ball;
 
-	this.delta = 0;
+	this.delta = 1/FPS;
+	this.lastFrame = Date.now();
+	this.deltaNetwork = 1/FPSNETWORK;
+	this.lastFrameNetwork = Date.now();
 
 	this.init(json);
 }
@@ -51,10 +54,27 @@ Room.prototype.start = function(){
 	}
 }
 
-Room.prototype.update = function(){
-	this.delta = (Date.now() - this.currentTime)/1000;
-	this.currentTime = Date.now();
-	
+Room.prototype.update = function(){	
+	var now = Date.now();
+
+	this.currentTime = now;
+
+	var d = this.delta * 1000;
+	while(now - this.lastFrame >= d){
+		this.physic();
+		this.lastFrame += d;
+	}
+
+	if(isServer){
+		var dn = this.deltaNetwork * 1000;
+		while(now - this.lastFrameNetwork >= dn){
+			this.updateNetwork();
+			this.lastFrameNetwork += dn;
+		}
+	}
+}
+
+Room.prototype.physic = function(){
 	for(var i in this.players){
 		this.players[i].update();
 	}
@@ -66,10 +86,6 @@ Room.prototype.update = function(){
 			}
 			this.ball = null;
 		}
-	}
-
-	if(isServer){
-		this.updateNetwork();
 	}
 }
 

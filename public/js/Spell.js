@@ -14,6 +14,9 @@ var Kick = function(){
 }
 
 Kick.prototype.use = function(player, x, y){
+	if(!x || !y){
+		return false;
+	}
 	if(Date.now() < this.lastUse + this.cd){
 		//probleme cd
 		return false;
@@ -50,6 +53,9 @@ var UltraKick = function(){
 }
 
 UltraKick.prototype.use = function(player, x, y){
+	if(!x || !y){
+		return false;
+	}
 	if(Date.now() < this.lastUse + this.cd){
 		//probleme cd
 		return false;

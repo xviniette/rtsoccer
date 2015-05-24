@@ -5,6 +5,7 @@ var uuid = require('node-uuid');
 var fs = require('fs');
 
 //Inclde files
+eval(fs.readFileSync('./public/js/config.js')+'');
 eval(fs.readFileSync('./public/js/Game.js')+'');
 eval(fs.readFileSync('./public/js/Map.js')+'');
 eval(fs.readFileSync('./public/js/Player.js')+'');
@@ -26,7 +27,6 @@ app.get( '/*' , function( req, res, next ) {
 });
 
 var isServer = true;
-var fps = 40;
 //Ces deux variable servent à générer les valeurs pour id user/room
 var nbClients = 0;
 var nbRooms = 0;
@@ -34,10 +34,8 @@ var game = new Game();
 
 //physic game
 setInterval(function(){
-	for(var i in game.rooms){
-		game.rooms[i].update();
-	}
-}, 1000/fps);
+	game.update();
+}, 1000/FPS);
 
 
 io.on('connection', function(socket){
