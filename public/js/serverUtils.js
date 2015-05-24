@@ -4,14 +4,18 @@ var Utils = {};
 
 Utils.onLogin = function(data, socket){
 	var pseudoPris = false;
+	if(data.length == 0){
+		return;
+	}
+	var pseudo = data.slice(0, 15);
 	for(var i in game.players){
-		if(game.players[i].pseudo == data){
+		if(game.players[i].pseudo == pseudo){
 			pseudoPris = true;
 			socket.emit("login", false);
 		}
 	}
 	if(!pseudoPris){
-		var p = new Player({id:nbClients,socket:socket.id,pseudo:data});
+		var p = new Player({id:nbClients,socket:socket.id,pseudo:pseudo});
 		nbClients++;
 		socket.emit("playerID", p.id);
 		game.addPlayer(p);
@@ -145,6 +149,10 @@ Utils.onCreateRoom = function(data, socket){
 	if(!p){return;}
 	if(p.room != null){
 		this.onLeaveRoom({}, socket);
+	}
+	if(!(data.name.length > 0 && parseInt(data.nb) > 0 && data.nb%2 == 0 && parseInt(data.time) > 0)){
+		//on test les trucs
+		return;
 	}
 	var room = game.addRoom(nbRooms, data.name, parseInt(data.nb), parseInt(data.time) * 60 * 1000, p);
 	nbRooms++;
