@@ -167,7 +167,7 @@ Display.prototype.refreshRooms = function(data){
 	var html = "<ul>";
 	for(var i in data){
 		min = Math.floor(data[i].totalTime/60000);
-		html += '<li><b>'+htmlEntities(data[i].nom)+'</b> ('+data[i].nb+'/'+data[i].nbPlayer+' joueurs) '+min+'" <button onclick=\'joinRoom("'+data[i].id+'")\'>Rejoindre</button></li>';
+		html += '<li><b>'+data[i].nom+'</b> ('+data[i].nb+'/'+data[i].nbPlayer+' joueurs) '+min+'" <button onclick=\'joinRoom("'+data[i].id+'")\'>Rejoindre</button></li>';
 	}
 	html += "</ul>";
 	$("#rooms").html(html);

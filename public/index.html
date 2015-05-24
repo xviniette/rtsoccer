@@ -7,29 +7,20 @@
 </head>
 <body>	
 	<div id="jeu">
-		<div id="loginPanel">
-			<p>RTSoccer : Le football en MOBA</p>
-			<form id="login">
-				<input type="text" placeholder="Pseudonyme" id="pseudo" autocomplete="off"> <input type="submit" value="Jouer">
-			</form>
-		</div>
 		<canvas id="canvas" width="800" height="560"></canvas>
 		<div class="informations">
 			<ul id="spells"></ul>
 			<div id="timeleft"></div>
 			<div class="score">
-				<span id="score1">0</span> <span id="score2">0</span>
+				<span id="score1">0</span> | <span id="score2">0</span>
 			</div>
-			<ul class="buttons">
-				<li><button id="switch">Changer d'équipe</button></li>
-				<li><button id="leave">Quitter</button></li>
-			</ul>
+			<ul class="buttons"><button id="switch">Changer d'équipe</button><button id="leave">Quitter</button></ul>
 		</div>
 		<div class="rooms">
 			<span id="nbPlayers">0</span> joueur(s) en ligne
 			<h1>Créer une partie</h1>
 			<form id="createRoom">
-				<input type="text" placeholder="Nom de la partie" id="roomName" autocomplete="off"> 
+				<input type="text" placeholder="Nom de la partie" id="roomName">
 				<input type="number" id="roomNbPlayer" value="2" max="20" min="2" step="2"> joueurs, 
 				<input type="number" id="roomTime" value="5" max="20" min="1" step="1"> minutes
 				<input type="submit" value="Créer la partie">
@@ -40,14 +31,13 @@
 		<div class="tchat">
 			<ul id="messages"></ul>
 			<form id="tchat">
-				<input type="text" id="tchatBar" size="20" autocomplete="off">
+				<input type="text" id="tchatBar" size="20">
 				<input type="submit" value="Send">
 			</forum>
 		</div>
 	</div>	
 	<script src="public/js/socketio.js"></script>
 	<script src="public/js/jquery.js"></script>
-	<script src="public/js/config.js"></script>
 	<script src="public/js/Player.js"></script>
 	<script src="public/js/Room.js"></script>
 	<script src="public/js/Display.js"></script>

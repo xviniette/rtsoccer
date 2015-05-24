@@ -1,6 +1,6 @@
 body{
 	margin:0px;
-	background-color: black;
+	background-color: #B5A69D;
 }
 
 #jeu{
@@ -10,15 +10,6 @@ body{
 	left:0px;
 	transform-origin:0 0;
 	transform: scale(1);
-}
-
-#loginPanel{
-	z-index: 100;
-	position: absolute;
-	background-color: white;
-	width:1050px;
-	height:640px;
-	text-align: center;
 }
 
 .rooms{
@@ -75,7 +66,6 @@ body{
 /* Spells */
 
 #spells{
-	position: absolute;
 	list-style: none;
 }
 
@@ -96,44 +86,15 @@ body{
 
 /* Timer */
 #timeleft{
-	position: absolute;
-	top:20px;
-	left:300px;
-	width:100px;
-	text-align: center;
 	color:yellow;
 	font-weight: bold;
-	font-size: 25px;
-}
-
-
-.score{
-	position: absolute;
-	top:20px;
-	left:500px;
-	font-size: 25px;
 }
 
 #score1{
-	width:40px;
-	text-align: center;
-	background-color: blue;
+	color:blue;
 }
 
 #score2{
-	text-align: center;
-	width:40px;
-	background-color: red;
+	color:red;
 }
 
-
-.buttons{
-	position: absolute;
-	left:600px;
-	text-align: right;
-	list-style: none;
-}
-
-.buttons button{
-	margin-bottom: 10px;
-}

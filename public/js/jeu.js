@@ -17,13 +17,11 @@ $(function(){
 	socket = io();
 	//Ok
 	socket.on("login", function(data){
-		$("#loginPanel").show();
-		//socket.emit("login", "Joueur"+Math.round(Math.random() * 1000));
+		socket.emit("login", "Joueur"+Math.round(Math.random() * 1000));
 	});
 
 	//Ok
 	socket.on("playerID", function(data){
-		$("#loginPanel").hide();
 		client.pID = data;
 	});
 
@@ -95,12 +93,12 @@ $(function(){
 
 	//tchat
 	socket.on("tchat", function(data){
-		$("#messages").append('<li>'+htmlEntities(data)+'</li>');
+		$("#messages").append('<li>'+data+'</li>');
 		$("#messages").animate({scrollTop:$("#messages").prop('scrollHeight')}, 30);
 	});
 
 	socket.on("information", function(data){
-		$("#messages").append('<li class="tchatInformation">'+htmlEntities(data)+'</li>');
+		$("#messages").append('<li class="tchatInformation">'+data+'</li>');
 		$("#messages").animate({scrollTop:$("#messages").prop('scrollHeight')}, 30);
 	});
 
@@ -125,11 +123,6 @@ $(function(){
 		socket.emit("createRoom", d);
 	});
 
-	$("#login").submit(function(e){
-		e.preventDefault();
-		socket.emit("login", $("#pseudo").val());
-	});
-
 	//envoi message
 	$("#tchat").submit(function(e){
 		e.preventDefault();
@@ -152,13 +145,11 @@ $(function(){
 	setInterval(function(){
 		//Boucle du jeu
 		client.update();
-	}, 1000/FPS);
+	}, 1000/client.fps);
 
 	document.body.addEventListener("keypress", function(e) {
-		//Gestion des touches*
-		if(!$("#tchatBar").is(":focus")){
-			client.keySpell(e.charCode);
-		}
+		//Gestion des touches
+		client.keySpell(e.charCode);
 	});
 
 	$(window).resize(function(){
@@ -216,9 +207,4 @@ var setScreenSize = function(){
 	jeu.css("left", (sW/2 - (bW/2)*scale)+"px");
 
 	client.scale = scale;
-}
-
-
-function htmlEntities(str) {
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }

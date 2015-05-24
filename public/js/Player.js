@@ -51,19 +51,17 @@ Player.prototype.setDirection = function(x, y){
 	this.direction = {"x":x, "y":y};
 }
 
-Player.prototype.interpolate = function(tps){
-	var interptime = tps - INTERPOLATION;
+Player.prototype.interpolation = function(){
+	var d = Date.now() - client.interp;
 	for(var i = 0; i < this.positions.length - 1; i++){
-		if(this.positions[i].t <= interptime && this.positions[i + 1].t >= interptime){
-			this.preX = this.x;
-			this.preY = this.y;
-			var ratio = (interptime - this.positions[i].t)/(this.positions[i + 1].t - this.positions[i].t);
-			var x = Math.round(this.positions[i].x + ratio * (this.positions[i + 1].x - this.positions[i].x));
-			var y = Math.round(this.positions[i].y + ratio * (this.positions[i + 1].y - this.positions[i].y));
-			this.x = x;
-			this.y = y;
-			break;
+		if(this.positions[i].t <= d && this.positions[i + 1].t > d){
+			var pos = getNewPosition(this.positions[i], this.positions[i+1], d);
+			this.preX = this.positions[i].x;
+			this.preY = this.positions[i].y;
+			this.x = pos.x;
+			this.y = pos.y;
 			this.positions.splice(0, i - 1);
+			break;
 		}
 	}
 }

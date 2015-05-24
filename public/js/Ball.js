@@ -14,8 +14,6 @@ var Ball = function(json){
 
 	this.lastCaptured = Date.now() - this.capturableCd;
 
-	this.positions = [];
-
 	this.init(json);
 }
 
@@ -43,21 +41,6 @@ Ball.prototype.isCapturable = function(player){
 Ball.prototype.setDirection = function(dx, dy, speed){
 	this.dx = dx * speed;
 	this.dy = dy * speed;
-}
-
-Ball.prototype.interpolate = function(tps){
-	var interptime = tps - INTERPOLATION;
-	for(var i = 0; i < this.positions.length - 1; i++){
-		if(this.positions[i].t <= interptime && this.positions[i + 1].t >= interptime){
-			var ratio = (interptime - this.positions[i].t)/(this.positions[i + 1].t - this.positions[i].t);
-			var x = Math.round(this.positions[i].x + ratio * (this.positions[i + 1].x - this.positions[i].x));
-			var y = Math.round(this.positions[i].y + ratio * (this.positions[i + 1].y - this.positions[i].y));
-			this.x = x;
-			this.y = y;
-			break;
-			this.positions.splice(0, i - 1);
-		}
-	}
 }
 
 Ball.prototype.kick = function(dx, dy, speed){
