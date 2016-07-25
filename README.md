@@ -1,10 +1,14 @@
-MOBA + Soccer = RTSoccer
+# RTSoccer
 
-TODO :
-Interpolation ////////
+RTSoccer is an university project. It was my first big expérience with Node.js.
 
-Finir design (Filet qui bouge ? Sprite pour ballon ? Gazon qui bouge ? ) Bon placement des éléments d'inforamtion (score timer, boutons), POPUP description sort, plus beau affichage des création gestion de partie
-Particules ?! poussiere ballon, ...
-Animation quand spell (Affichage du spell au dessus de la tete ?)
-Ajout graphique quand on est stun
-Accueil pour choisir son pseudo
+RTSoccer is a real-time multiplayer browser game, mixing MOBA mecanics with soccer rules.
+
+![alt tag](http://github.com/xviniette/rtsoccer/blob/master/rtsoccer.gif?raw=true)
+
+## Tech
+* Javascript
+* Node.js
+* Websocket (Socket.io)
+* HTML5/CSS3
+
